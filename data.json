@@ -1,0 +1,433 @@
+{
+  "operations": [
+    {
+      "id": "op-001",
+      "name": "Operación Río Limay Norte",
+      "location": "Río Limay - Sector Norte",
+      "startDate": "2025-03-01",
+      "status": "active",
+      "description": "Traslado de agua desde bomba principal hacia sectores de riego norte"
+    },
+    {
+      "id": "op-002",
+      "name": "Operación Sector Austral",
+      "location": "Río Limay - Sector Austral",
+      "startDate": "2025-03-05",
+      "status": "active",
+      "description": "Distribución de agua para riego sector austral del campo"
+    }
+  ],
+  "locations": [
+    {
+      "id": "loc-001",
+      "name": "Bodega Principal",
+      "type": "warehouse",
+      "address": "Campamento Río Limay - Edificio Central"
+    },
+    {
+      "id": "loc-002",
+      "name": "Patio de Equipos",
+      "type": "yard",
+      "address": "Área norte del campamento"
+    },
+    {
+      "id": "loc-003",
+      "name": "Taller Mecánico",
+      "type": "workshop",
+      "address": "Edificio B - Zona techada"
+    }
+  ],
+  "assets": [
+    {
+      "id": "BOMBA-001",
+      "code": "BOMBA-001",
+      "type": "Bomba",
+      "name": "Bomba Hauptfeld 12\"",
+      "status": "in_operation",
+      "operationId": "op-001",
+      "location": "Punto de captación Norte",
+      "acquisitionDate": "2023-01-15",
+      "condition": "good",
+      "specifications": {
+        "brand": "Hauptfeld",
+        "model": "HF-1200",
+        "diameter": "12 pulgadas",
+        "capacity": "1200 m³/h",
+        "power": "350 HP"
+      },
+      "notes": "Motor en excelente estado. Última revisión: Feb 2025"
+    },
+    {
+      "id": "BOMBA-002",
+      "code": "BOMBA-002",
+      "type": "Bomba",
+      "name": "Bomba Sykes 10\"",
+      "status": "in_warehouse",
+      "operationId": null,
+      "location": "Bodega Principal",
+      "acquisitionDate": "2022-06-20",
+      "condition": "good",
+      "specifications": {
+        "brand": "Sykes",
+        "model": "SY-1000",
+        "diameter": "10 pulgadas",
+        "capacity": "800 m³/h",
+        "power": "280 HP"
+      },
+      "notes": "Respaldo operativo. Mantenimiento al día"
+    },
+    {
+      "id": "BOMBA-003",
+      "code": "BOMBA-003",
+      "type": "Bomba",
+      "name": "Bomba Godwin 8\"",
+      "status": "in_repair",
+      "operationId": null,
+      "location": "Taller Mecánico",
+      "acquisitionDate": "2021-03-10",
+      "condition": "repair_needed",
+      "specifications": {
+        "brand": "Godwin",
+        "model": "GD-800",
+        "diameter": "8 pulgadas",
+        "capacity": "600 m³/h",
+        "power": "200 HP"
+      },
+      "notes": "Reparación de sello mecánico. Esperando repuestos"
+    },
+    {
+      "id": "REEL-001",
+      "code": "REEL-001",
+      "type": "Carrete Layflat 12\"",
+      "name": "Carrete Layflat 12\" - 200m",
+      "status": "in_operation",
+      "operationId": "op-001",
+      "location": "Línea principal Norte",
+      "acquisitionDate": "2024-02-01",
+      "condition": "good",
+      "specifications": {
+        "diameter": "12 pulgadas",
+        "length": "200 metros",
+        "fittings": "Racords Bauer en ambos extremos",
+        "pressure": "10 bar"
+      },
+      "notes": "Nuevo. Sin uso previo en operación"
+    },
+    {
+      "id": "REEL-002",
+      "code": "REEL-002",
+      "type": "Carrete Layflat 12\"",
+      "name": "Carrete Layflat 12\" - 200m",
+      "status": "in_operation",
+      "operationId": "op-001",
+      "location": "Línea principal Norte - Extensión",
+      "acquisitionDate": "2024-02-01",
+      "condition": "good",
+      "specifications": {
+        "diameter": "12 pulgadas",
+        "length": "200 metros",
+        "fittings": "Racords Bauer en ambos extremos",
+        "pressure": "10 bar"
+      },
+      "notes": "Nuevo. Verificado vacío antes de operación"
+    },
+    {
+      "id": "REEL-003",
+      "code": "REEL-003",
+      "type": "Carrete Layflat 10\"",
+      "name": "Carrete Layflat 10\" - 200m",
+      "status": "in_warehouse",
+      "operationId": null,
+      "location": "Bodega Principal",
+      "acquisitionDate": "2023-08-15",
+      "condition": "good",
+      "specifications": {
+        "diameter": "10 pulgadas",
+        "length": "200 metros",
+        "fittings": "Racords Bauer en ambos extremos",
+        "pressure": "12 bar"
+      },
+      "notes": "Respaldo en bodega. Etiquetado y listo"
+    },
+    {
+      "id": "REEL-004",
+      "code": "REEL-004",
+      "type": "Carrete Layflat 10\"",
+      "name": "Carrete Layflat 10\" - 200m",
+      "status": "in_warehouse",
+      "operationId": null,
+      "location": "Bodega Principal",
+      "acquisitionDate": "2023-08-15",
+      "condition": "good",
+      "specifications": {
+        "diameter": "10 pulgadas",
+        "length": "200 metros",
+        "fittings": "Racords Bauer en ambos extremos",
+        "pressure": "12 bar"
+      },
+      "notes": "Carrete de respaldo"
+    },
+    {
+      "id": "REEL-005",
+      "code": "REEL-005",
+      "type": "Carrete Layflat 10\"",
+      "name": "Carrete Layflat 10\" - 200m",
+      "status": "in_operation",
+      "operationId": "op-002",
+      "location": "Sector Austral - Distribución",
+      "acquisitionDate": "2024-01-10",
+      "condition": "good",
+      "specifications": {
+        "diameter": "10 pulgadas",
+        "length": "200 metros",
+        "fittings": "Racords Bauer en ambos extremos",
+        "pressure": "12 bar"
+      },
+      "notes": "Operación activa Sector Austral"
+    },
+    {
+      "id": "DER-001",
+      "code": "DER-001",
+      "type": "Derivador",
+      "name": "Derivador 12\" - 3 vías",
+      "status": "in_operation",
+      "operationId": "op-001",
+      "location": "Punto de bifurcación Norte",
+      "acquisitionDate": "2023-05-20",
+      "condition": "good",
+      "specifications": {
+        "diameter": "12 pulgadas",
+        "outlets": 3,
+        "type": "Y Bifurcación"
+      },
+      "notes": "Válvulas en buen estado"
+    },
+    {
+      "id": "DER-002",
+      "code": "DER-002",
+      "type": "Derivador",
+      "name": "Derivador 10\" - 2 vías",
+      "status": "in_warehouse",
+      "operationId": null,
+      "location": "Bodega Principal",
+      "acquisitionDate": "2023-05-20",
+      "condition": "good",
+      "specifications": {
+        "diameter": "10 pulgadas",
+        "outlets": 2,
+        "type": "T Bifurcación"
+      },
+      "notes": "Respaldo en bodega"
+    },
+    {
+      "id": "MANG-001",
+      "code": "MANG-001",
+      "type": "Manguera Bauer",
+      "name": "Manguera Bauer 6\" - 10m",
+      "status": "in_operation",
+      "operationId": "op-001",
+      "location": "Conexiones varias",
+      "acquisitionDate": "2024-01-05",
+      "condition": "good",
+      "specifications": {
+        "diameter": "6 pulgadas",
+        "length": "10 metros",
+        "coupling": "Bauer rápido"
+      },
+      "notes": "Juego de 5 unidades"
+    },
+    {
+      "id": "MANG-002",
+      "code": "MANG-002",
+      "type": "Manguera Bauer",
+      "name": "Manguera Bauer 6\" - 10m",
+      "status": "in_operation",
+      "operationId": "op-002",
+      "location": "Sector Austral",
+      "acquisitionDate": "2024-01-05",
+      "condition": "good",
+      "specifications": {
+        "diameter": "6 pulgadas",
+        "length": "10 metros",
+        "coupling": "Bauer rápido"
+      },
+      "notes": "Juego de 5 unidades"
+    },
+    {
+      "id": "MANG-003",
+      "code": "MANG-003",
+      "type": "Manguera Bauer",
+      "name": "Manguera Bauer 4\" - 5m",
+      "status": "in_warehouse",
+      "operationId": null,
+      "location": "Bodega Principal",
+      "acquisitionDate": "2023-11-10",
+      "condition": "good",
+      "specifications": {
+        "diameter": "4 pulgadas",
+        "length": "5 metros",
+        "coupling": "Bauer rápido"
+      },
+      "notes": "Stock de 10 unidades"
+    },
+    {
+      "id": "VIT-001",
+      "code": "VIT-001",
+      "type": "Acople Vitáulic",
+      "name": "Acople Vitáulic 6\"",
+      "status": "in_operation",
+      "operationId": "op-001",
+      "location": "Diversos puntos",
+      "acquisitionDate": "2023-06-15",
+      "condition": "good",
+      "specifications": {
+        "diameter": "6 pulgadas",
+        "type": "Acople rápido"
+      },
+      "notes": "Cantidad: 8 unidades"
+    },
+    {
+      "id": "VIT-002",
+      "code": "VIT-002",
+      "type": "Acople Vitáulic",
+      "name": "Acople Vitáulic 4\"",
+      "status": "in_warehouse",
+      "operationId": null,
+      "location": "Bodega Principal",
+      "acquisitionDate": "2023-06-15",
+      "condition": "good",
+      "specifications": {
+        "diameter": "4 pulgadas",
+        "type": "Acople rápido"
+      },
+      "notes": "Stock: 12 unidades"
+    },
+    {
+      "id": "CAUD-001",
+      "code": "CAUD-001",
+      "type": "Caudalímetro",
+      "name": "Caudalímetro Electromagnético 12\"",
+      "status": "in_operation",
+      "operationId": "op-001",
+      "location": "Medición principal Norte",
+      "acquisitionDate": "2022-09-01",
+      "condition": "good",
+      "specifications": {
+        "diameter": "12 pulgadas",
+        "type": "Electromagnético",
+        "brand": "KROHNE",
+        "model": "OPTIFLUX 5000"
+      },
+      "notes": "Calibración vigente. Próxima: Jun 2025"
+    },
+    {
+      "id": "CAUD-002",
+      "code": "CAUD-002",
+      "type": "Caudalímetro",
+      "name": "Caudalímetro Mecánico 10\"",
+      "status": "in_warehouse",
+      "operationId": null,
+      "location": "Bodega Principal",
+      "acquisitionDate": "2021-04-20",
+      "condition": "good",
+      "specifications": {
+        "diameter": "10 pulgadas",
+        "type": "Mecánico",
+        "brand": "Georg Fischer"
+      },
+      "notes": "Respaldo. Necesita calibración"
+    },
+    {
+      "id": "SUC-001",
+      "code": "SUC-001",
+      "type": "Accesorio Succión",
+      "name": "Filtro de Succión 12\"",
+      "status": "in_operation",
+      "operationId": "op-001",
+      "location": "Captación Bomba Principal",
+      "acquisitionDate": "2023-02-10",
+      "condition": "good",
+      "specifications": {
+        "diameter": "12 pulgadas",
+        "type": "Filtro cesta",
+        "mesh": "10mm"
+      },
+      "notes": "Limpieza semanal documentada"
+    },
+    {
+      "id": "SUC-002",
+      "code": "SUC-002",
+      "type": "Accesorio Succión",
+      "name": "Válvula de pie 10\"",
+      "status": "in_warehouse",
+      "operationId": null,
+      "location": "Bodega Principal",
+      "acquisitionDate": "2022-11-05",
+      "condition": "good",
+      "specifications": {
+        "diameter": "10 pulgadas",
+        "type": "Válvula anti-retorno"
+      },
+      "notes": "Respaldo. Verificar junta"
+    },
+    {
+      "id": "TANK-001",
+      "code": "TANK-001",
+      "type": "Placa Tank Australiano",
+      "name": "Placa Tank Australiano 5400L",
+      "status": "in_operation",
+      "operationId": "op-002",
+      "location": "Sector Austral - Tanque 1",
+      "acquisitionDate": "2024-01-20",
+      "condition": "good",
+      "specifications": {
+        "capacity": "5400 litros",
+        "type": "Tank Australiano",
+        "material": "Polietileno"
+      },
+      "notes": "Tanque de distribución. Nivel verificado diario"
+    },
+    {
+      "id": "TANK-002",
+      "code": "TANK-002",
+      "type": "Placa Tank Australiano",
+      "name": "Placa Tank Australiano 5400L",
+      "status": "in_operation",
+      "operationId": "op-002",
+      "location": "Sector Austral - Tanque 2",
+      "acquisitionDate": "2024-01-20",
+      "condition": "good",
+      "specifications": {
+        "capacity": "5400 litros",
+        "type": "Tank Australiano",
+        "material": "Polietileno"
+      },
+      "notes": "Tanque de respaldo. Verificarsellos"
+    },
+    {
+      "id": "TANK-003",
+      "code": "TANK-003",
+      "type": "Placa Tank Australiano",
+      "name": "Placa Tank Australiano 5400L",
+      "status": "in_warehouse",
+      "operationId": null,
+      "location": "Patio de Equipos",
+      "acquisitionDate": "2023-09-15",
+      "condition": "good",
+      "specifications": {
+        "capacity": "5400 litros",
+        "type": "Tank Australiano",
+        "material": "Polietileno"
+      },
+      "notes": "Respaldo en patio. Limpio y etiquetado"
+    }
+  ],
+  "metadata": {
+    "version": "1.0",
+    "lastUpdate": "2025-03-17",
+    "totalAssets": 20,
+    "totalOperations": 2,
+    "totalLocations": 3,
+    "note": "Datos de ejemplo precargados para demostración"
+  }
+}

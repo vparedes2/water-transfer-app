@@ -1,0 +1,2945 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Water Transfer Track - Rio Limay</title>
+    <link rel="manifest" href="data:application/json;base64,eyJ1c2VyX3ByZWZlcmVuY2VzIjp7fSwibmFtZSI6IldhdGVyIFRyYW5zZmVyIFRyYWNrIiwic2hvcnRfbmFtZSI6IldUIiwiZGVzY3JpcHRpb24iOiJDb250cm9sIGRlIGFjdGl2b3MgdmFyY29zIHdhdGVyIHRyYW5zZmVyIiwidGhlbWVfY29sb3IiOiIjRjU5RTBCIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiI0YxRjVGNSIsImljb25fYXJ0aWNsZXMiOlt7InNyYyI6Imh0dHBzOi8wdmlhLnBsYWNlaG9sZGVyLmNvbS8xOTIteG5nLz9pY29uPWRyb3B3YXRlciZjb2xvcj0jRjU5RTBCIiwic2l6ZXMiOlsxMjAsMTYwfV19">
+    <style>
+        :root {
+            --primary: #F59E0B;
+            --primary-dark: #D97706;
+            --secondary: #1E293B;
+            --accent: #3B82F6;
+            --danger: #EF4444;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --bg: #F1F5F9;
+            --card-bg: #FFFFFF;
+            --text: #1E293B;
+            --text-light: #64748B;
+            --border: #E2E8F0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--secondary);
+            color: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .logo h1 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .logo span {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        /* Main Content */
+        .main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* Dashboard Cards */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.25rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--primary);
+        }
+
+        .stat-card.danger {
+            border-left-color: var(--danger);
+        }
+
+        .stat-card.success {
+            border-left-color: var(--success);
+        }
+
+        .stat-card.accent {
+            border-left-color: var(--accent);
+        }
+
+        .stat-card h3 {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .stat-card .subtitle {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 0.25rem;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 1.5rem 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* Asset Table */
+        .table-container {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .table-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .table-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .filter-btn:hover:not(.active) {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 0.875rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: #F8FAFC;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--text-light);
+        }
+
+        td {
+            font-size: 0.9rem;
+        }
+
+        .asset-id {
+            font-family: monospace;
+            background: #F1F5F9;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.375rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status-badge.available {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .status-badge.in-field {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        .status-badge.repair {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+
+        .status-badge.storage {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        /* Action Buttons */
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .action-btn.primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .action-btn.primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .action-btn.danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .action-btn.secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .action-btn.outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .action-btn.outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .action-btn.small {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-around;
+            padding: 0.75rem;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: #FEF3C7;
+            color: var(--primary);
+        }
+
+        .nav-item svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .nav-item span {
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        /* FAB Button */
+        .fab {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 64px;
+            height: 64px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 99;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(245, 158, 11, 0.5);
+        }
+
+        .fab svg {
+            width: 28px;
+            height: 28px;
+            color: white;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: #F1F5F9;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-body {
+            padding: 1.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .modal-footer {
+            padding: 1rem 1.25rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+        }
+
+        /* QR Scanner */
+        .scanner-container {
+            background: #000;
+            border-radius: 12px;
+            aspect-ratio: 1;
+            max-width: 300px;
+            margin: 0 auto 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scanner-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            height: 70%;
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+        }
+
+        .scanner-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            animation: scan 2s ease-in-out infinite;
+        }
+
+        @keyframes scan {
+            0%, 100% { top: 10%; }
+            50% { top: 90%; }
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        .tab {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-light);
+            cursor: pointer;
+            position: relative;
+            transition: color 0.2s;
+        }
+
+        .tab.active {
+            color: var(--primary);
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        /* Summary Cards */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-item {
+            background: #F8FAFC;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .summary-item .count {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .summary-item .label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 0.25rem;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-light);
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--secondary);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 300;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            background: var(--success);
+        }
+
+        .toast.error {
+            background: var(--danger);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1rem;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .table-container {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 600px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .header, .bottom-nav, .fab {
+                display: none;
+            }
+
+            .table-container {
+                box-shadow: none;
+            }
+        }
+
+        /* Icon Button */
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: #F1F5F9;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .icon-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Operation Badge */
+        .operation-badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            background: #E0E7FF;
+            color: #4338CA;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* Search */
+        .search-box {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        .search-box svg {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            color: var(--text-light);
+        }
+
+        /* QR Display */
+        .qr-display {
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .qr-code {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            background: #F1F5F9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: monospace;
+            font-size: 0.7rem;
+            word-break: break-all;
+            padding: 0.5rem;
+        }
+        /* Add Asset Modal Enhanced */
+        .auto-code-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 0.375rem 0.75rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .auto-code-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .code-input-wrapper {
+            position: relative;
+        }
+
+        .quantity-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 24px;
+            height: 24px;
+            padding: 0 6px;
+            background: var(--accent);
+            color: white;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .category-manager {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #F8FAFC;
+            border-radius: 8px;
+        }
+
+        .category-manager h4 {
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .category-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .category-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+
+        .category-tag .remove {
+            cursor: pointer;
+            color: var(--danger);
+            font-weight: bold;
+        }
+
+        .add-category-input {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .add-category-input input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .add-category-input button {
+            padding: 0.5rem 1rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .bulk-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            background: #E0E7FF;
+            color: #4338CA;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .bulk-indicator::before {
+            content: '📦';
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">WT</div>
+                <div>
+                    <h1>Water Transfer Track</h1>
+                    <span>Rio Limay Oil Field Services</span>
+                </div>
+            </div>
+            <button class="icon-btn" onclick="showSyncModal()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12a9 9 0 11-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/>
+                    <path d="M21 3v5h-5"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Dashboard Stats -->
+        <div class="dashboard-grid">
+            <div class="stat-card success">
+                <h3>Total Activos</h3>
+                <div class="number" id="totalAssets">0</div>
+                <div class="subtitle">Registrados en sistema</div>
+            </div>
+            <div class="stat-card">
+                <h3>Disponibles</h3>
+                <div class="number" id="availableAssets">0</div>
+                <div class="subtitle">En almacén/acopio</div>
+            </div>
+            <div class="stat-card accent">
+                <h3>En Campo</h3>
+                <div class="number" id="fieldAssets">0</div>
+                <div class="subtitle">En operación activa</div>
+            </div>
+            <div class="stat-card danger">
+                <h3>A Reparar</h3>
+                <div class="number" id="repairAssets">0</div>
+                <div class="subtitle">Requieren mantenimiento</div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('inventory')">Inventario</button>
+            <button class="tab" onclick="switchTab('operations')">Por Operación</button>
+            <button class="tab" onclick="switchTab('types')">Por Tipo</button>
+            <button class="tab" onclick="switchTab('repair')">Reparación</button>
+        </div>
+
+        <!-- Tab Content: Inventory -->
+        <div id="tab-inventory">
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>Inventario General</h3>
+                    <div class="filter-group">
+                        <button class="filter-btn active" onclick="filterAssets('all')">Todos</button>
+                        <button class="filter-btn" onclick="filterAssets('available')">Disponibles</button>
+                        <button class="filter-btn" onclick="filterAssets('in-field')">En Campo</button>
+                        <button class="filter-btn" onclick="filterAssets('repair')">Reparación</button>
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Tipo</th>
+                            <th>Descripción</th>
+                            <th>Estado</th>
+                            <th>Operación</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="assetsTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab Content: Operations -->
+        <div id="tab-operations" style="display: none;">
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>Activos por Operación</h3>
+                </div>
+                <div class="form-group" style="padding: 1rem;">
+                    <label>Seleccionar Operación</label>
+                    <select id="operationSelect" onchange="filterByOperation()">
+                        <option value="">Todas las operaciones</option>
+                        <option value="la-amarga-chica">La Amarga Chica</option>
+                        <option value="pozo-norte">Pozo Norte</option>
+                        <option value="pozo-sur">Pozo Sur</option>
+                        <option value="almacen">Almacén Central</option>
+                    </select>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Tipo</th>
+                            <th>Estado</th>
+                            <th>Ubicación</th>
+                        </tr>
+                    </thead>
+                    <tbody id="operationTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab Content: By Types -->
+        <div id="tab-types" style="display: none;">
+            <div class="summary-grid" id="typesSummary">
+            </div>
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>Detalle por Tipo</h3>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tipo de Activo</th>
+                            <th>Total</th>
+                            <th>Disponibles</th>
+                            <th>En Campo</th>
+                            <th>Reparación</th>
+                        </tr>
+                    </thead>
+                    <tbody id="typesTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab Content: Repair -->
+        <div id="tab-repair" style="display: none;">
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>Equipos a Reparar</h3>
+                    <button class="action-btn primary" onclick="showAddAssetModal()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 5v14M5 12h14"/>
+                        </svg>
+                        Nuevo Activo
+                    </button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Tipo</th>
+                            <th>Estado</th>
+                            <th>Fecha Reporte</th>
+                            <th>Notas</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="repairTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- FAB Button -->
+    <div class="fab" onclick="showScannerModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 7V5a2 2 0 012-2h2M17 3h2a2 2 0 012 2v2M21 17v2a2 2 0 01-2 2h-2M7 21H5a2 2 0 01-2-2v-2"/>
+            <rect x="7" y="7" width="10" height="10" rx="1"/>
+        </svg>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a class="nav-item active" onclick="switchTab('inventory')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                <polyline points="9,22 9,12 15,12 15,22"/>
+            </svg>
+            <span>Inicio</span>
+        </a>
+        <a class="nav-item" onclick="showScannerModal()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <path d="M7 7h.01M7 12h.01M7 17h.01M12 7h.01M12 12h.01M12 17h.01M17 7h.01M17 12h.01M17 17h.01"/>
+            </svg>
+            <span>Escanear</span>
+        </a>
+        <a class="nav-item" onclick="switchTab('operations')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/>
+            </svg>
+            <span>Operaciones</span>
+        </a>
+        <a class="nav-item" onclick="switchTab('types')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                <polyline points="14,2 14,8 20,8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+            <span>Reportes</span>
+        </a>
+    </nav>
+
+    <!-- Scanner Modal -->
+    <div class="modal-overlay" id="scannerModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Escanear Código QR</h2>
+                <button class="modal-close" onclick="closeModal('scannerModal')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="scanner-container">
+                    <div class="scanner-overlay">
+                        <div class="scanner-line"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>O ingrese código manualmente</label>
+                    <input type="text" id="manualCodeInput" placeholder="Ingrese código del activo">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="action-btn outline" onclick="closeModal('scannerModal')">Cancelar</button>
+                <button class="action-btn primary" onclick="searchAsset()">Buscar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Asset Detail Modal -->
+    <div class="modal-overlay" id="assetDetailModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Detalle del Activo</h2>
+                <button class="modal-close" onclick="closeModal('assetDetailModal')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body" id="assetDetailContent">
+            </div>
+        </div>
+    </div>
+
+    <!-- Movement Modal -->
+    <div class="modal-overlay" id="movementModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="movementTitle">Registrar Movimiento</h2>
+                <button class="modal-close" onclick="closeModal('movementModal')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Tipo de Movimiento</label>
+                    <select id="movementType">
+                        <option value="acopio">Acopio (Almacenamiento)</option>
+                        <option value="alta">Alta (Instalación en Campo)</option>
+                        <option value="baja">Baja (Desinstalación/Transporte)</option>
+                        <option value="repair">Enviar a Reparación</option>
+                    </select>
+                </div>
+                <div class="form-group" id="operationGroup">
+                    <label>Operación/Destino</label>
+                    <select id="movementOperation">
+                        <option value="la-amarga-chica">La Amarga Chica</option>
+                        <option value="pozo-norte">Pozo Norte</option>
+                        <option value="pozo-sur">Pozo Sur</option>
+                        <option value="almacen">Almacén Central</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Ubicación Específica</label>
+                    <input type="text" id="movementLocation" placeholder="Ej: Playa A, Sector 3">
+                </div>
+                <div class="form-group">
+                    <label>Notas</label>
+                    <textarea id="movementNotes" placeholder="Observaciones del movimiento"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="action-btn outline" onclick="closeModal('movementModal')">Cancelar</button>
+                <button class="action-btn primary" onclick="registerMovement()">Registrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Asset Modal - Enhanced -->
+    <div class="modal-overlay" id="addAssetModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Agregar Nuevo Activo</h2>
+                <button class="modal-close" onclick="closeModal('addAssetModal')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Tipo de Activo -->
+                <div class="form-group">
+                    <label>Tipo de Activo</label>
+                    <select id="newAssetType" onchange="onTypeChange()">
+                        <option value="">-- Seleccionar Tipo --</option>
+                        <option value="bomba">Bomba</option>
+                        <option value="layflat-12">Carrete Layflat 12" (200m)</option>
+                        <option value="layflat-10">Carrete Layflat 10" (200m)</option>
+                        <option value="derivador">Derivador</option>
+                        <option value="manguera-bauer">Manguera Bauer</option>
+                        <option value="victaulic">Acople Victaulic</option>
+                        <option value="caudalimetro">Caudalímetro</option>
+                        <option value="succión-tk">Accesorio Succión TK</option>
+                        <option value="placa-tanque">Placa Tanque Australiano</option>
+                        <option value="custom">+ Nueva Categoría</option>
+                    </select>
+                </div>
+
+                <!-- Nueva Categoría (oculto por defecto) -->
+                <div class="form-group" id="newCategoryGroup" style="display: none;">
+                    <label>Nueva Categoría</label>
+                    <input type="text" id="newCategoryName" placeholder="Nombre de la nueva categoría">
+                </div>
+
+                <!-- Código -->
+                <div class="form-row">
+                    <div class="form-group" style="position: relative;">
+                        <label>Código</label>
+                        <div class="code-input-wrapper">
+                            <input type="text" id="newAssetCode" placeholder="Código único">
+                            <button type="button" class="auto-code-btn" onclick="generateAutoCode()">🔄 Auto</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Cantidad</label>
+                        <input type="number" id="newAssetQuantity" value="1" min="1" onchange="onQuantityChange()">
+                    </div>
+                </div>
+
+                <!-- Descripción -->
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <input type="text" id="newAssetDescription" placeholder="Descripción detallada">
+                </div>
+
+                <!-- Estado y Operación -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Estado Inicial</label>
+                        <select id="newAssetStatus">
+                            <option value="available">Disponible</option>
+                            <option value="in-field">En Campo</option>
+                            <option value="repair">Reparación</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Operación Inicial</label>
+                        <select id="newAssetOperation">
+                            <option value="almacen">Almacén Central</option>
+                            <option value="la-amarga-chica">La Amarga Chica</option>
+                            <option value="pozo-norte">Pozo Norte</option>
+                            <option value="pozo-sur">Pozo Sur</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Ubicación -->
+                <div class="form-group">
+                    <label>Ubicación Específica</label>
+                    <input type="text" id="newAssetLocation" placeholder="Ej: Playa A, Sector 3, Estante B">
+                </div>
+
+                <!-- Notas -->
+                <div class="form-group">
+                    <label>Notas Adicionales</label>
+                    <textarea id="newAssetNotes" placeholder="Observaciones adicionales"></textarea>
+                </div>
+
+                <!-- Resumen de cantidad -->
+                <div id="quantitySummary" style="display: none; padding: 0.75rem; background: #FEF3C7; border-radius: 8px; margin-top: 0.5rem;">
+                    <strong>📦 Cantidad:</strong> <span id="quantityValue">1</span> unidad(es) serán creadas(s) con código base: <code id="quantityCodeBase">-</code>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="action-btn outline" onclick="closeModal('addAssetModal')">Cancelar</button>
+                <button class="action-btn primary" onclick="addNewAsset()">Agregar Activo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sync Modal -->
+    <div class="modal-overlay" id="syncModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Sincronizar con Google Sheets</h2>
+                <button class="modal-close" onclick="closeModal('syncModal')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>URL de Google Sheets</label>
+                    <input type="text" id="sheetsUrl" placeholder="https://docs.google.com/spreadsheets/d/...">
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-light); margin-top: 1rem;">
+                    Los datos se sincronizarán automáticamente con tu planilla de Google Drive.
+                    También puedes exportar manualmente los datos.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="action-btn outline" onclick="exportToCSV()">Exportar CSV</button>
+                <button class="action-btn primary" onclick="syncWithSheets()">Sincronizar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Sample Data
+        const assetTypes = {
+            'bomba': { name: 'Bomba', icon: '⚙️' },
+            'layflat-12': { name: 'Carrete Layflat 12"', icon: '📏' },
+            'layflat-10': { name: 'Carrete Layflat 10"', icon: '📏' },
+            'derivador': { name: 'Derivador', icon: '🔀' },
+            'manguera-bauer': { name: 'Manguera Bauer', icon: '🔗' },
+            'victaulic': { name: 'Acople Victaulic', icon: '🔧' },
+            'caudalimetro': { name: 'Caudalímetro', icon: '📊' },
+            'succión-tk': { name: 'Accesorio Succión TK', icon: '🔌' },
+            'placa-tanque': { name: 'Placa Tanque Australiano', icon: '🟫' }
+        };
+
+        let assets = [
+            { id: 'BOM-001', type: 'bomba', description: 'Bomba centrífuga 6x4', status: 'available', operation: 'almacen', location: 'Depósito Principal', qr: 'WT-BOM-001', history: [], repairNotes: '' },
+            { id: 'BOM-002', type: 'bomba', description: 'Bomba centrífuga 6x4', status: 'in-field', operation: 'la-amarga-chica', location: 'Sector A - Pozo 1', qr: 'WT-BOM-002', history: [], repairNotes: '' },
+            { id: 'LF12-001', type: 'layflat-12', description: 'Carrete 200m con racords', status: 'in-field', operation: 'la-amarga-chica', location: 'Sector B', qr: 'WT-LF12-001', history: [], repairNotes: '' },
+            { id: 'LF12-002', type: 'layflat-12', description: 'Carrete 200m con racords', status: 'available', operation: 'almacen', location: 'Depósito Principal', qr: 'WT-LF12-002', history: [], repairNotes: '' },
+            { id: 'LF12-003', type: 'layflat-12', description: 'Carrete 200m con racords', status: 'repair', operation: 'almacen', location: 'Taller', qr: 'WT-LF12-003', history: [], repairNotes: 'Fuga en racord - necesita更换' },
+            { id: 'LF10-001', type: 'layflat-10', description: 'Carrete 200m con racords', status: 'available', operation: 'almacen', location: 'Depósito Principal', qr: 'WT-LF10-001', history: [], repairNotes: '' },
+            { id: 'DER-001', type: 'derivador', description: 'Derivador 3 vías', status: 'in-field', operation: 'la-amarga-chica', location: 'Sector C', qr: 'WT-DER-001', history: [], repairNotes: '' },
+            { id: 'DER-002', type: 'derivador', description: 'Derivador 3 vías', status: 'available', operation: 'almacen', location: 'Depósito Principal', qr: 'WT-DER-002', history: [], repairNotes: '' },
+            { id: 'BAU-001', type: 'manguera-bauer', description: 'Manguera Bauer 6" x 10m', status: 'in-field', operation: 'la-amarga-chica', location: 'Sector A', qr: 'WT-BAU-001', history: [], repairNotes: '' },
+            { id: 'BAU-002', type: 'manguera-bauer', description: 'Manguera Bauer 6" x 10m', status: 'in-field', operation: 'la-amarga-chica', location: 'Sector B', qr: 'WT-BAU-002', history: [], repairNotes: '' },
+            { id: 'BAU-003', type: 'manguera-bauer', description: 'Manguera Bauer 6" x 10m', status: 'available', operation: 'almacen', location: 'Depósito Principal', qr: 'WT-BAU-003', history: [], repairNotes: '' },
+            { id: 'VIC-001', type: 'victaulic', description: 'Acople Victaulic 6"', status: 'in-field', operation: 'la-amarga-chica', location: 'Sector A', qr: 'WT-VIC-001', history: [], repairNotes: '' },
+            { id: 'VIC-002', type: 'victaulic', description: 'Acople Victaulic 6"', status: 'available', operation: 'almacen', location: 'Caja 1', qr: 'WT-VIC-002', history: [], repairNotes: '' },
+            { id: 'CAU-001', type: 'caudalimetro', description: 'Caudalímetro electrónico', status: 'in-field', operation: 'la-amarga-chica', location: 'Medidor Principal', qr: 'WT-CAU-001', history: [], repairNotes: '' },
+            { id: 'CAU-002', type: 'caudalimetro', description: 'Caudalímetro electrónico', status: 'repair', operation: 'almacen', location: 'Taller', qr: 'WT-CAU-002', history: [], repairNotes: 'Display no funciona' },
+            { id: 'TK-001', type: 'succión-tk', description: 'Accesorio succión tank', status: 'in-field', operation: 'la-amarga-chica', location: 'Tanque 1', qr: 'WT-TK-001', history: [], repairNotes: '' },
+            { id: 'TK-002', type: 'succión-tk', description: 'Accesorio succión tank', status: 'available', operation: 'almacen', location: 'Depósito Principal', qr: 'WT-TK-002', history: [], repairNotes: '' },
+            { id: 'PL-001', type: 'placa-tanque', description: 'Placa tanque australiano 5400m³', status: 'available', operation: 'almacen', location: 'Patio Sur', qr: 'WT-PL-001', history: [], repairNotes: '' },
+            { id: 'PL-002', type: 'placa-tanque', description: 'Placa tanque australiano 5400m³', status: 'in-field', operation: 'la-amarga-chica', location: 'Tanque Temporal', qr: 'WT-PL-002', history: [], repairNotes: '' }
+        ];
+
+        let currentAsset = null;
+        let currentFilter = 'all';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateDashboard();
+            renderAssetsTable();
+            renderTypesSummary();
+            renderRepairTable();
+        });
+
+        // Update Dashboard
+        function updateDashboard() {
+            document.getElementById('totalAssets').textContent = assets.length;
+            document.getElementById('availableAssets').textContent = assets.filter(a => a.status === 'available').length;
+            document.getElementById('fieldAssets').textContent = assets.filter(a => a.status === 'in-field').length;
+            document.getElementById('repairAssets').textContent = assets.filter(a => a.status === 'repair').length;
+        }
+
+        // Render Assets Table
+        function renderAssetsTable() {
+            const tbody = document.getElementById('assetsTableBody');
+            let filteredAssets = currentFilter === 'all'
+                ? assets
+                : assets.filter(a => a.status === currentFilter);
+
+            if (filteredAssets.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="empty-state">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+                            </svg>
+                            <p>No se encontraron activos</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = filteredAssets.map(asset => `
+                <tr>
+                    <td><span class="asset-id">${asset.id}</span></td>
+                    <td>${assetTypes[asset.type]?.icon || ''} ${assetTypes[asset.type]?.name || asset.type}</td>
+                    <td>${asset.description}</td>
+                    <td><span class="status-badge ${asset.status}"><span class="status-dot"></span>${getStatusText(asset.status)}</span></td>
+                    <td><span class="operation-badge">${getOperationText(asset.operation)}</span></td>
+                    <td>
+                        <button class="action-btn outline small" onclick="viewAsset('${asset.id}')">Ver</button>
+                        <button class="action-btn primary small" onclick="openMovementModal('${asset.id}')">Mover</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Render Types Summary
+        function renderTypesSummary() {
+            const container = document.getElementById('typesSummary');
+            const tableBody = document.getElementById('typesTableBody');
+
+            const typeCounts = {};
+            Object.keys(assetTypes).forEach(type => {
+                typeCounts[type] = {
+                    total: assets.filter(a => a.type === type).length,
+                    available: assets.filter(a => a.type === type && a.status === 'available').length,
+                    inField: assets.filter(a => a.type === type && a.status === 'in-field').length,
+                    repair: assets.filter(a => a.type === type && a.status === 'repair').length
+                };
+            });
+
+            // Summary cards
+            let summaryHTML = '';
+            Object.keys(assetTypes).forEach(type => {
+                if (typeCounts[type].total > 0) {
+                    summaryHTML += `
+                        <div class="summary-item" onclick="filterByType('${type}')" style="cursor: pointer;">
+                            <div class="count">${typeCounts[type].total}</div>
+                            <div class="label">${assetTypes[type].name}</div>
+                        </div>
+                    `;
+                }
+            });
+            container.innerHTML = summaryHTML || '<p class="empty-state">No hay activos registrados</p>';
+
+            // Table
+            tableBody.innerHTML = Object.keys(assetTypes).map(type => `
+                <tr>
+                    <td>${assetTypes[type].icon} ${assetTypes[type].name}</td>
+                    <td><strong>${typeCounts[type].total}</strong></td>
+                    <td>${typeCounts[type].available}</td>
+                    <td>${typeCounts[type].inField}</td>
+                    <td>${typeCounts[type].repair}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Render Repair Table
+        function renderRepairTable() {
+            const tbody = document.getElementById('repairTableBody');
+            const repairAssets = assets.filter(a => a.status === 'repair');
+
+            if (repairAssets.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="empty-state">
+                            <p>No hay equipos en reparación</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = repairAssets.map(asset => `
+                <tr>
+                    <td><span class="asset-id">${asset.id}</span></td>
+                    <td>${assetTypes[asset.type]?.icon || ''} ${assetTypes[asset.type]?.name || asset.type}</td>
+                    <td><span class="status-badge repair"><span class="status-dot"></span>En Reparación</span></td>
+                    <td>${asset.location}</td>
+                    <td>${asset.repairNotes || '-'}</td>
+                    <td>
+                        <button class="action-btn primary small" onclick="repairComplete('${asset.id}')">Reparado</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Filter Assets
+        function filterAssets(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderAssetsTable();
+        }
+
+        // Filter by Operation
+        function filterByOperation() {
+            const operation = document.getElementById('operationSelect').value;
+            const tbody = document.getElementById('operationTableBody');
+
+            let filteredAssets = operation
+                ? assets.filter(a => a.operation === operation)
+                : assets;
+
+            tbody.innerHTML = filteredAssets.map(asset => `
+                <tr>
+                    <td><span class="asset-id">${asset.id}</span></td>
+                    <td>${assetTypes[asset.type]?.icon || ''} ${assetTypes[asset.type]?.name || asset.type}</td>
+                    <td><span class="status-badge ${asset.status}"><span class="status-dot"></span>${getStatusText(asset.status)}</span></td>
+                    <td>${asset.location}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Filter by Type
+        function filterByType(type) {
+            currentFilter = 'all';
+            renderAssetsTable();
+            // Highlight specific type filtering could be added here
+        }
+
+        // Switch Tab
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('[id^="tab-"]').forEach(content => content.style.display = 'none');
+
+            event.target.classList.add('active');
+            document.getElementById(`tab-${tabName}`).style.display = 'block';
+        }
+
+        // View Asset
+        function viewAsset(id) {
+            const asset = assets.find(a => a.id === id);
+            if (!asset) return;
+
+            currentAsset = asset;
+            const content = document.getElementById('assetDetailContent');
+            content.innerHTML = `
+                <div class="qr-display">
+                    <div class="qr-code">${asset.qr}</div>
+                    <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-light);">Código QR</p>
+                </div>
+                <div class="form-group">
+                    <label>ID</label>
+                    <input type="text" value="${asset.id}" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Tipo</label>
+                    <input type="text" value="${assetTypes[asset.type]?.name || asset.type}" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <input type="text" value="${asset.description}" disabled>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Estado</label>
+                        <input type="text" value="${getStatusText(asset.status)}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Operación</label>
+                        <input type="text" value="${getOperationText(asset.operation)}" disabled>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Ubicación</label>
+                    <input type="text" value="${asset.location}" disabled>
+                </div>
+                ${asset.repairNotes ? `
+                <div class="form-group">
+                    <label>Notas de Reparación</label>
+                    <textarea disabled>${asset.repairNotes}</textarea>
+                </div>
+                ` : ''}
+                <div class="modal-footer" style="margin: 1rem -1.25rem -1.25rem; padding: 1rem; border-top: 1px solid var(--border);">
+                    <button class="action-btn danger" onclick="deleteAsset('${asset.id}')">Eliminar</button>
+                    <button class="action-btn primary" onclick="closeModal('assetDetailModal'); openMovementModal('${asset.id}')">Mover</button>
+                </div>
+            `;
+            document.getElementById('assetDetailModal').classList.add('active');
+        }
+
+        // Open Movement Modal
+        function openMovementModal(id) {
+            const asset = assets.find(a => a.id === id);
+            if (!asset) return;
+            currentAsset = asset;
+            document.getElementById('movementType').value = asset.status === 'available' ? 'alta' : 'baja';
+            document.getElementById('movementOperation').value = asset.operation;
+            document.getElementById('movementModal').classList.add('active');
+        }
+
+        // Register Movement
+        function registerMovement() {
+            if (!currentAsset) return;
+
+            const type = document.getElementById('movementType').value;
+            const operation = document.getElementById('movementOperation').value;
+            const location = document.getElementById('movementLocation').value;
+            const notes = document.getElementById('movementNotes').value;
+
+            let newStatus = currentAsset.status;
+            let repairNotes = '';
+
+            switch(type) {
+                case 'acopio':
+                    newStatus = 'available';
+                    break;
+                case 'alta':
+                    newStatus = 'in-field';
+                    break;
+                case 'baja':
+                    newStatus = 'available';
+                    break;
+                case 'repair':
+                    newStatus = 'repair';
+                    repairNotes = notes || 'En reparación';
+                    break;
+            }
+
+            // Update asset
+            const index = assets.findIndex(a => a.id === currentAsset.id);
+            assets[index] = {
+                ...assets[index],
+                status: newStatus,
+                operation: operation,
+                location: location || assets[index].location,
+                repairNotes: repairNotes,
+                history: [...assets[index].history, {
+                    date: new Date().toISOString(),
+                    type: type,
+                    from: currentAsset.operation,
+                    to: operation,
+                    notes: notes
+                }]
+            };
+
+            currentAsset = assets[index];
+            closeModal('movementModal');
+            updateDashboard();
+            renderAssetsTable();
+            renderTypesSummary();
+            renderRepairTable();
+            showToast('Movimiento registrado correctamente', 'success');
+        }
+
+        // Custom categories storage
+        let customCategories = [];
+
+        // Code prefixes for each type
+        const codePrefixes = {
+            'bomba': 'BOM',
+            'layflat-12': 'LF12',
+            'layflat-10': 'LF10',
+            'derivador': 'DER',
+            'manguera-bauer': 'BAU',
+            'victaulic': 'VIC',
+            'caudalimetro': 'CAU',
+            'succión-tk': 'TK',
+            'placa-tanque': 'PL'
+        };
+
+        // Generate automatic code
+        function generateAutoCode() {
+            const type = document.getElementById('newAssetType').value;
+            if (!type || type === 'custom') {
+                showToast('Seleccione un tipo de activo primero', 'error');
+                return;
+            }
+
+            const prefix = codePrefixes[type] || 'AST';
+            const existingCodes = assets.filter(a => a.type === type).map(a => a.id);
+
+            let counter = 1;
+            let newCode = `${prefix}-${String(counter).padStart(3, '0')}`;
+
+            while (existingCodes.includes(newCode)) {
+                counter++;
+                newCode = `${prefix}-${String(counter).padStart(3, '0')}`;
+            }
+
+            document.getElementById('newAssetCode').value = newCode;
+            updateQuantitySummary();
+            showToast(`Código generado: ${newCode}`, 'success');
+        }
+
+        // Handle type change
+        function onTypeChange() {
+            const type = document.getElementById('newAssetType').value;
+            const categoryGroup = document.getElementById('newCategoryGroup');
+
+            if (type === 'custom') {
+                categoryGroup.style.display = 'block';
+            } else {
+                categoryGroup.style.display = 'none';
+                // Auto-generate code suggestion
+                if (!document.getElementById('newAssetCode').value) {
+                    generateAutoCode();
+                }
+            }
+            updateQuantitySummary();
+        }
+
+        // Handle quantity change
+        function onQuantityChange() {
+            updateQuantitySummary();
+        }
+
+        // Update quantity summary
+        function updateQuantitySummary() {
+            const quantity = parseInt(document.getElementById('newAssetQuantity').value) || 1;
+            const code = document.getElementById('newAssetCode').value;
+            const summary = document.getElementById('quantitySummary');
+
+            if (quantity > 1 && code) {
+                summary.style.display = 'block';
+                document.getElementById('quantityValue').textContent = quantity;
+                document.getElementById('quantityCodeBase').textContent = code;
+            } else {
+                summary.style.display = 'none';
+            }
+        }
+
+        // Add New Asset - Enhanced
+        function addNewAsset() {
+            let type = document.getElementById('newAssetType').value;
+            let code = document.getElementById('newAssetCode').value.trim();
+            const quantity = parseInt(document.getElementById('newAssetQuantity').value) || 1;
+            const status = document.getElementById('newAssetStatus').value;
+            let description = document.getElementById('newAssetDescription').value;
+            const operation = document.getElementById('newAssetOperation').value;
+            const location = document.getElementById('newAssetLocation').value;
+            const notes = document.getElementById('newAssetNotes').value;
+
+            // Handle custom category
+            if (type === 'custom') {
+                const newCategoryName = document.getElementById('newCategoryName').value.trim();
+                if (!newCategoryName) {
+                    showToast('Ingrese el nombre de la nueva categoría', 'error');
+                    return;
+                }
+                // Generate prefix for custom category
+                const customPrefix = newCategoryName.substring(0, 3).toUpperCase().replace(/[^A-Z]/g, 'X');
+                type = 'custom-' + newCategoryName.toLowerCase().replace(/\s+/g, '-');
+
+                // Add to custom categories
+                if (!customCategories.includes(type)) {
+                    customCategories.push(type);
+                }
+
+                // Add to assetTypes
+                assetTypes[type] = { name: newCategoryName, icon: '📦' };
+                codePrefixes[type] = customPrefix;
+
+                // Auto-generate code for custom type
+                if (!code) {
+                    const prefix = customPrefix;
+                    const existingCodes = assets.filter(a => a.type === type).map(a => a.id);
+                    let counter = 1;
+                    code = `${prefix}-${String(counter).padStart(3, '0')}`;
+                    while (existingCodes.includes(code)) {
+                        counter++;
+                        code = `${prefix}-${String(counter).padStart(3, '0')}`;
+                    }
+                }
+
+                if (!description) description = newCategoryName;
+            }
+
+            if (!code || !description) {
+                showToast('Por favor complete el código y descripción', 'error');
+                return;
+            }
+
+            // Check if code already exists
+            if (assets.some(a => a.id === code)) {
+                showToast('El código ya existe. Use otro o genere uno automático.', 'error');
+                return;
+            }
+
+            // Create asset(s)
+            const assetsToAdd = [];
+
+            if (quantity === 1) {
+                // Single asset
+                assetsToAdd.push({
+                    id: code,
+                    type: type,
+                    description: description,
+                    status: status,
+                    operation: operation,
+                    location: location || (operation === 'almacen' ? 'Depósito Principal' : 'Campo'),
+                    qr: `WT-${code}`,
+                    quantity: 1,
+                    isBulk: false,
+                    history: [{
+                        date: new Date().toISOString(),
+                        type: 'alta',
+                        notes: 'Alta inicial del activo' + (notes ? ': ' + notes : '')
+                    }],
+                    repairNotes: ''
+                });
+            } else {
+                // Bulk assets - create multiple with sequential codes
+                const prefix = code.split('-')[0];
+                const baseNumber = parseInt(code.split('-')[1]) || 1;
+
+                for (let i = 0; i < quantity; i++) {
+                    const itemCode = `${prefix}-${String(baseNumber + i).padStart(3, '0')}`;
+
+                    // Skip if code already exists
+                    if (assets.some(a => a.id === itemCode)) continue;
+
+                    assetsToAdd.push({
+                        id: itemCode,
+                        type: type,
+                        description: description + ` (${i + 1}/${quantity})`,
+                        status: status,
+                        operation: operation,
+                        location: location || (operation === 'almacen' ? 'Depósito Principal' : 'Campo'),
+                        qr: `WT-${itemCode}`,
+                        quantity: 1,
+                        isBulk: true,
+                        bulkGroup: code,
+                        history: [{
+                            date: new Date().toISOString(),
+                            type: 'alta',
+                            notes: `Alta inicial - Lote de ${quantity} unidades` + (notes ? ': ' + notes : '')
+                        }],
+                        repairNotes: ''
+                    });
+                }
+            }
+
+            // Add all assets
+            assets.push(...assetsToAdd);
+
+            // Close modal and update UI
+            closeModal('addAssetModal');
+            updateDashboard();
+            renderAssetsTable();
+            renderTypesSummary();
+            renderRepairTable();
+
+            const message = quantity === 1
+                ? `Activo ${code} agregado correctamente`
+                : `${assetsToAdd.length} activos agregados correctamente`;
+            showToast(message, 'success');
+
+            // Clear form
+            document.getElementById('newAssetCode').value = '';
+            document.getElementById('newAssetDescription').value = '';
+            document.getElementById('newAssetQuantity').value = '1';
+            document.getElementById('newAssetLocation').value = '';
+            document.getElementById('newAssetNotes').value = '';
+            document.getElementById('newAssetType').value = '';
+            document.getElementById('newCategoryName').value = '';
+            document.getElementById('newCategoryGroup').style.display = 'none';
+            document.getElementById('quantitySummary').style.display = 'none';
+        }
+
+        // Repair Complete
+        function repairComplete(id) {
+            const index = assets.findIndex(a => a.id === id);
+            if (index === -1) return;
+
+            assets[index] = {
+                ...assets[index],
+                status: 'available',
+                repairNotes: '',
+                history: [...assets[index].history, {
+                    date: new Date().toISOString(),
+                    type: 'repair-complete',
+                    notes: 'Reparación completada'
+                }]
+            };
+
+            updateDashboard();
+            renderAssetsTable();
+            renderTypesSummary();
+            renderRepairTable();
+            showToast('Equipo marcado como reparado', 'success');
+        }
+
+        // Delete Asset
+        function deleteAsset(id) {
+            if (!confirm('¿Está seguro de eliminar este activo?')) return;
+
+            assets = assets.filter(a => a.id !== id);
+            closeModal('assetDetailModal');
+            updateDashboard();
+            renderAssetsTable();
+            renderTypesSummary();
+            renderRepairTable();
+            showToast('Activo eliminado', 'success');
+        }
+
+        // Show Scanner Modal
+        function showScannerModal() {
+            document.getElementById('scannerModal').classList.add('active');
+            document.getElementById('manualCodeInput').focus();
+        }
+
+        // Search Asset
+        function searchAsset() {
+            const code = document.getElementById('manualCodeInput').value.trim();
+            if (!code) {
+                showToast('Ingrese un código', 'error');
+                return;
+            }
+
+            const asset = assets.find(a => a.id === code || a.qr === code);
+            if (asset) {
+                closeModal('scannerModal');
+                document.getElementById('manualCodeInput').value = '';
+                viewAsset(asset.id);
+            } else {
+                showToast('Activo no encontrado', 'error');
+            }
+        }
+
+        // Show Modal Functions
+        function showAddAssetModal() {
+            document.getElementById('addAssetModal').classList.add('active');
+        }
+
+        function showSyncModal() {
+            document.getElementById('syncModal').classList.add('active');
+        }
+
+        // Close Modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Helper Functions
+        function getStatusText(status) {
+            const texts = {
+                'available': 'Disponible',
+                'in-field': 'En Campo',
+                'repair': 'En Reparación',
+                'storage': 'En Acopio'
+            };
+            return texts[status] || status;
+        }
+
+        function getOperationText(operation) {
+            const texts = {
+                'la-amarga-chica': 'La Amarga Chica',
+                'pozo-norte': 'Pozo Norte',
+                'pozo-sur': 'Pozo Sur',
+                'almacen': 'Almacén Central'
+            };
+            return texts[operation] || operation;
+        }
+
+        // Show Toast
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Export to CSV
+        function exportToCSV() {
+            const headers = ['ID', 'Tipo', 'Descripción', 'Estado', 'Operación', 'Ubicación', 'Notas Reparación'];
+            const rows = assets.map(a => [
+                a.id,
+                assetTypes[a.type]?.name || a.type,
+                a.description,
+                getStatusText(a.status),
+                getOperationText(a.operation),
+                a.location,
+                a.repairNotes
+            ]);
+
+            const csv = [headers, ...rows].map(row => row.join(',')).join('\n');
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `water-transfer-inventory-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('Archivo CSV exportado', 'success');
+        }
+
+        // Sync with Sheets
+        function syncWithSheets() {
+            const url = document.getElementById('sheetsUrl').value;
+            if (!url) {
+                showToast('Ingrese la URL de Google Sheets', 'error');
+                return;
+            }
+
+            // In a real implementation, this would connect to Google Sheets API
+            showToast('Sincronización iniciada. Los datos se exportarán a Google Sheets.', 'success');
+            closeModal('syncModal');
+        }
+
+        // Close modals on overlay click
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    overlay.classList.remove('active');
+                }
+            });
+        });
+    </script>
+
+<script>
+/**
+ * Iframe 元素高亮注入脚本
+ * 需要在目标网站中引入此脚本来支持跨域 iframe 高亮功能
+ *
+ * 使用方法：
+ * 1. 将此脚本添加到目标网站的 HTML 中
+ * 2. 或通过浏览器扩展、用户脚本等方式注入
+ */
+
+(function () {
+  "use strict";
+
+  // 检查是否在 iframe 中
+  if (window.self === window.top) {
+    return; // 不在 iframe 中，不执行
+  }
+
+  // 检查是否已经初始化过
+  if (window.__iframeHighlightInitialized) {
+    return;
+  }
+  window.__iframeHighlightInitialized = true;
+  console.log("Iframe 高亮脚本已加载");
+
+  // 创建高亮覆盖层
+  var overlay = document.createElement("div");
+  overlay.id = "iframe-highlight-overlay";
+  overlay.style.cssText = "\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100vw;\n    height: 100vh;\n    pointer-events: none;\n    z-index: 999999;\n    overflow: hidden;\n  ";
+
+  // 创建悬停高亮框（虚线边框）
+  var highlightBox = document.createElement("div");
+  highlightBox.id = "iframe-highlight-box";
+  highlightBox.style.cssText = "\n    position: absolute;\n    border: 2px dashed #007AFF;\n    background: rgba(0, 122, 255, 0.08);\n    pointer-events: none;\n    display: none;\n    transition: all 0.1s ease;\n    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.8);\n    border-radius: 2px;\n  ";
+
+  // 创建选中节点的常驻高亮框（实线边框）
+  var selectedBox = document.createElement("div");
+  selectedBox.id = "iframe-selected-box";
+  selectedBox.style.cssText = "\n    position: absolute;\n    border: 2px solid #007AFF;\n    pointer-events: none;\n    display: none;\n    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.9), 0 0 8px rgba(255, 107, 53, 0.4);\n    border-radius: 2px;\n    z-index: 1000000;\n  ";
+
+  // 创建悬停标签显示
+  var tagLabel = document.createElement("div");
+  tagLabel.id = "iframe-tag-label";
+  tagLabel.style.cssText = "\n    position: absolute;\n    background: #007AFF;\n    color: white;\n    padding: 2px 6px;\n    font-size: 11px;\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n    border-radius: 2px;\n    pointer-events: none;\n    display: none;\n    white-space: nowrap;\n    z-index: 1000001;\n    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);\n    font-weight: 500;\n  ";
+
+  // 创建选中节点标签
+  var selectedLabel = document.createElement("div");
+  selectedLabel.id = "iframe-selected-label";
+  selectedLabel.style.cssText = "\n    position: absolute;\n    background: #007AFF;\n    color: white;\n    padding: 3px 8px;\n    font-size: 11px;\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n    border-radius: 3px;\n    pointer-events: none;\n    display: none;\n    white-space: nowrap;\n    z-index: 1000002;\n    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);\n    font-weight: 600;\n  ";
+  overlay.appendChild(highlightBox);
+  overlay.appendChild(selectedBox);
+  overlay.appendChild(tagLabel);
+  overlay.appendChild(selectedLabel);
+  document.body.appendChild(overlay);
+
+  // 存储当前选中的元素
+  var selectedElement = null;
+  var highlightEnabled = false;
+
+  // 更新选中元素的高亮显示
+  function updateSelectedHighlight(element) {
+    console.log("updateSelectedHighlight called with:", element);
+    if (!element) {
+      selectedBox.style.display = "none";
+      selectedLabel.style.display = "none";
+      selectedElement = null;
+      console.log("Cleared selected highlight");
+      return;
+    }
+    selectedElement = element;
+    var rect = element.getBoundingClientRect();
+    console.log("Selected element rect:", rect);
+
+    // 更新选中高亮框位置
+    selectedBox.style.display = "block";
+    selectedBox.style.left = "".concat(rect.left - 2, "px");
+    selectedBox.style.top = "".concat(rect.top - 2, "px");
+    selectedBox.style.width = "".concat(rect.width + 4, "px");
+    selectedBox.style.height = "".concat(rect.height + 4, "px");
+
+    // 更新选中标签位置和内容
+    selectedLabel.style.display = "block";
+    selectedLabel.textContent = "\u2713 <".concat(element.tagName.toLowerCase(), ">");
+
+    // 计算标签位置，确保不超出视窗
+    var labelTop = rect.top - 28;
+    var labelLeft = rect.left;
+
+    // 如果标签会超出顶部，显示在元素下方
+    if (labelTop < 5) {
+      labelTop = rect.bottom + 5;
+    }
+
+    // 如果标签会超出右侧，向左调整
+    var labelWidth = selectedLabel.offsetWidth || 100; // 预估宽度
+    if (labelLeft + labelWidth > window.innerWidth - 10) {
+      labelLeft = window.innerWidth - labelWidth - 10;
+    }
+    selectedLabel.style.left = "".concat(Math.max(5, labelLeft), "px");
+    selectedLabel.style.top = "".concat(labelTop, "px");
+    console.log("Selected highlight positioned at:", {
+      left: selectedBox.style.left,
+      top: selectedBox.style.top,
+      width: selectedBox.style.width,
+      height: selectedBox.style.height
+    });
+  }
+  function getElementSelector(element) {
+    if (!(element instanceof Element)) throw new Error('Argument must be a DOM element');
+    var segments = [];
+    var current = element;
+    while (current !== document.documentElement) {
+      var selector = '';
+      // 优先检查唯一ID
+      if (current.id && document.querySelectorAll("#".concat(current.id)).length === 1) {
+        segments.unshift("#".concat(current.id));
+        break; // ID唯一，无需继续向上
+      }
+
+      // 生成类名选择器（取第一个有效类名）
+      var classes = Array.from(current.classList).filter(function (c) {
+        return !c.startsWith('js-');
+      });
+      var className = classes.length > 0 ? ".".concat(classes[0]) : '';
+
+      // 生成位置索引（nth-child）
+      var tag = current.tagName.toLowerCase();
+      if (!className) {
+        var siblings = Array.from(current.parentNode.children);
+        var index = siblings.findIndex(function (el) {
+          return el === current;
+        }) + 1;
+        selector = "".concat(tag, ":nth-child(").concat(index, ")");
+      } else {
+        selector = className;
+      }
+      segments.unshift(selector);
+      current = current.parentElement;
+    }
+
+    // 处理根元素
+    if (current === document.documentElement) {
+      segments.unshift('html');
+    }
+    return segments.join(' > ');
+  }
+
+  // 获取元素文本内容
+  function getElementText(element) {
+    var _element$textContent;
+    if (element.tagName === "INPUT") {
+      return element.value || element.placeholder || "";
+    }
+    if (element.tagName === "TEXTAREA") {
+      return element.value || element.placeholder || "";
+    }
+    var text = ((_element$textContent = element.textContent) === null || _element$textContent === void 0 ? void 0 : _element$textContent.trim()) || "";
+    return text.length > 50 ? text.substring(0, 50) + "..." : text;
+  }
+
+  // 获取元素属性信息
+  function getElementAttributes(element) {
+    var attrs = {};
+    for (var i = 0; i < element.attributes.length; i++) {
+      var attr = element.attributes[i];
+      attrs[attr.name] = attr.value;
+    }
+    return attrs;
+  }
+
+  // 鼠标悬停事件处理
+  function handleMouseOver(e) {
+    if (!highlightEnabled) return;
+    var target = e.target;
+    if (!target || target === overlay || target === highlightBox || target === tagLabel || target === selectedBox || target === selectedLabel) {
+      return;
+    }
+
+    // 避免高亮 html 和 body 元素
+    if (target === document.documentElement || target === document.body) {
+      return;
+    }
+
+    // 如果是已选中的元素，不显示悬停高亮
+    if (target === selectedElement) {
+      highlightBox.style.display = "none";
+      tagLabel.style.display = "none";
+      return;
+    }
+    var rect = target.getBoundingClientRect();
+    var selector = getElementSelector(target);
+    var text = getElementText(target);
+    var attributes = getElementAttributes(target);
+
+    // 更新悬停高亮框位置
+    highlightBox.style.display = "block";
+    highlightBox.style.left = "".concat(rect.left - 2, "px");
+    highlightBox.style.top = "".concat(rect.top - 2, "px");
+    highlightBox.style.width = "".concat(rect.width + 4, "px");
+    highlightBox.style.height = "".concat(rect.height + 4, "px");
+
+    // 更新标签位置和内容
+    tagLabel.style.display = "block";
+    tagLabel.textContent = "<".concat(target.tagName.toLowerCase(), ">");
+
+    // 计算标签位置，确保不超出视窗
+    var labelTop = rect.top - 22;
+    var labelLeft = rect.left;
+
+    // 如果标签会超出顶部，显示在元素下方
+    if (labelTop < 0) {
+      labelTop = rect.bottom + 5;
+    }
+
+    // 如果标签会超出右侧，向左调整
+    if (labelLeft + tagLabel.offsetWidth > window.innerWidth) {
+      labelLeft = window.innerWidth - tagLabel.offsetWidth - 5;
+    }
+    tagLabel.style.left = "".concat(Math.max(0, labelLeft), "px");
+    tagLabel.style.top = "".concat(labelTop, "px");
+
+    // 发送消息到父窗口
+    var elementInfo = {
+      tagName: target.tagName.toLowerCase(),
+      rect: {
+        left: rect.left,
+        top: rect.top,
+        right: rect.right,
+        bottom: rect.bottom,
+        width: rect.width,
+        height: rect.height,
+        x: rect.x,
+        y: rect.y
+      },
+      selector: selector,
+      text: text,
+      attributes: attributes,
+      url: window.location.href,
+      path: window.location.pathname,
+      timestamp: Date.now()
+    };
+    try {
+      window.parent.postMessage({
+        type: "iframe-element-hover",
+        data: elementInfo,
+        source: "iframe-highlight-injector"
+      }, "*");
+    } catch (error) {
+      console.warn("无法发送消息到父窗口:", error);
+    }
+  }
+
+  // 鼠标离开事件处理
+  function handleMouseOut(e) {
+    if (!highlightEnabled) return;
+    var relatedTarget = e.relatedTarget;
+
+    // 如果鼠标移动到高亮相关元素上，不隐藏高亮
+    if (relatedTarget && (relatedTarget === highlightBox || relatedTarget === tagLabel || relatedTarget === overlay || relatedTarget === selectedBox || relatedTarget === selectedLabel)) {
+      return;
+    }
+    highlightBox.style.display = "none";
+    tagLabel.style.display = "none";
+    try {
+      window.parent.postMessage({
+        type: "iframe-element-hover",
+        data: null,
+        source: "iframe-highlight-injector"
+      }, "*");
+    } catch (error) {
+      console.warn("无法发送消息到父窗口:", error);
+    }
+  }
+
+  // 点击事件处理
+  function handleClick(e) {
+    var target = e.target;
+    if (!target || target === overlay || target === highlightBox || target === tagLabel || target === selectedBox || target === selectedLabel) {
+      return;
+    }
+
+    // 避免处理 html 和 body 元素
+    if (target === document.documentElement || target === document.body) {
+      return;
+    }
+
+    // 检查是否是交互元素，这些元素需要保留默认行为
+    var isInteractiveElement = ['input', 'textarea', 'select', 'button', 'a'].includes(target.tagName.toLowerCase());
+
+    // 如果高亮功能启用，对于非交互元素阻止默认行为和事件传播
+    if (highlightEnabled) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    var rect = target.getBoundingClientRect();
+    var selector = getElementSelector(target);
+    var text = getElementText(target);
+    var attributes = getElementAttributes(target);
+    console.log("Element clicked:", {
+      tagName: target.tagName,
+      selector: selector,
+      rect: rect
+    });
+
+    // 立即更新选中高亮
+    updateSelectedHighlight(target);
+
+    // 隐藏悬停高亮，因为现在是选中状态
+    highlightBox.style.display = "none";
+    tagLabel.style.display = "none";
+    var elementInfo = {
+      tagName: target.tagName.toLowerCase(),
+      rect: {
+        left: rect.left,
+        top: rect.top,
+        right: rect.right,
+        bottom: rect.bottom,
+        width: rect.width,
+        height: rect.height,
+        x: rect.x,
+        y: rect.y
+      },
+      selector: selector,
+      text: text,
+      attributes: attributes,
+      url: window.location.href,
+      path: window.location.pathname,
+      timestamp: Date.now()
+    };
+    try {
+      window.parent.postMessage({
+        type: "iframe-element-click",
+        data: elementInfo,
+        source: "iframe-highlight-injector"
+      }, "*");
+    } catch (error) {
+      console.warn("无法发送消息到父窗口:", error);
+    }
+  }
+
+  // 监听来自父窗口的消息
+  function handleParentMessage(event) {
+    console.log("Received message from parent:", event.data);
+    if (event.data.type === "iframe-highlight-toggle") {
+      var enabled = event.data.enabled;
+      console.log("Highlight toggle:", enabled);
+      if (enabled) {
+        enableHighlight();
+      } else {
+        disableHighlight();
+      }
+    } else if (event.data.type === "enable-iframe-highlight") {
+      console.log("Enable iframe highlight");
+      enableHighlight();
+    } else if (event.data.type === "disable-iframe-highlight") {
+      console.log("Disable iframe highlight");
+      disableHighlight();
+    } else if (event.data.type === "toggle-iframe-highlight") {
+      var _enabled = event.data.enabled !== undefined ? event.data.enabled : !highlightEnabled;
+      console.log("Toggle iframe highlight to:", _enabled);
+      if (_enabled) {
+        enableHighlight();
+      } else {
+        disableHighlight();
+      }
+    } else if (event.data.type === "update-selected-element") {
+      var selector = event.data.selector;
+      console.log("Update selected element with selector:", selector);
+      if (selector) {
+        try {
+          var element = document.querySelector(selector);
+          console.log("Found element by selector:", element);
+          updateSelectedHighlight(element);
+        } catch (error) {
+          console.warn("Failed to select element:", error);
+          updateSelectedHighlight(null);
+        }
+      } else {
+        updateSelectedHighlight(null);
+      }
+    } else if (event.data.type === "clear-selected-element") {
+      console.log("Clear selected element");
+      updateSelectedHighlight(null);
+    }
+  }
+
+  // 启用高亮功能
+  function enableHighlight() {
+    console.log("Enabling highlight");
+    document.addEventListener("mouseover", handleMouseOver, true);
+    document.addEventListener("mouseout", handleMouseOut, true);
+    document.addEventListener("click", handleClick, true);
+    highlightEnabled = true;
+    overlay.style.display = "block";
+  }
+
+  // 禁用高亮功能
+  function disableHighlight() {
+    console.log("Disabling highlight");
+    highlightEnabled = false;
+    // 保持事件监听器，但通过 highlightEnabled 变量控制行为
+    // 这样可以保留选中状态的显示
+    highlightBox.style.display = "none";
+    tagLabel.style.display = "none";
+    // 不隐藏 selectedBox 和 selectedLabel，保留选中状态
+  }
+
+  // 完全禁用高亮功能（移除所有监听器）
+  function fullyDisableHighlight() {
+    console.log("Fully disabling highlight");
+    highlightEnabled = false;
+    document.removeEventListener("mouseover", handleMouseOver, true);
+    document.removeEventListener("mouseout", handleMouseOut, true);
+    document.removeEventListener("click", handleClick, true);
+    overlay.style.display = "none";
+    highlightBox.style.display = "none";
+    tagLabel.style.display = "none";
+    selectedBox.style.display = "none";
+    selectedLabel.style.display = "none";
+  }
+
+  // 添加事件监听
+  enableHighlight();
+  window.addEventListener("message", handleParentMessage);
+
+  // 暴露全局函数供外部调用
+  window.__iframeHighlightControl = {
+    enable: enableHighlight,
+    disable: disableHighlight,
+    fullyDisable: fullyDisableHighlight,
+    isEnabled: function isEnabled() {
+      return highlightEnabled;
+    },
+    getSelectedElement: function getSelectedElement() {
+      return selectedElement;
+    },
+    updateSelected: updateSelectedHighlight,
+    // 通过消息发送开关控制
+    sendToggleMessage: function sendToggleMessage(enabled) {
+      window.parent.postMessage({
+        type: 'iframe-highlight-status',
+        enabled: enabled || highlightEnabled,
+        source: 'iframe-highlight-injector'
+      }, '*');
+    }
+  };
+
+  // 通知父窗口脚本已加载
+  try {
+    window.parent.postMessage({
+      type: "iframe-highlight-ready",
+      data: {
+        url: window.location.href,
+        userAgent: navigator.userAgent,
+        timestamp: Date.now()
+      },
+      source: "iframe-highlight-injector"
+    }, "*");
+  } catch (error) {
+    console.warn("无法发送就绪消息到父窗口:", error);
+  }
+
+  // 清理函数
+  window.__iframeHighlightCleanup = function () {
+    fullyDisableHighlight();
+    window.removeEventListener("message", handleParentMessage);
+    if (overlay.parentElement) {
+      overlay.parentElement.removeChild(overlay);
+    }
+    delete window.__iframeHighlightInitialized;
+    delete window.__iframeHighlightCleanup;
+  };
+})();
+
+</script>
+
+<script>
+/**
+ * Iframe 元素高亮注入脚本
+ * 需要在目标网站中引入此脚本来支持跨域 iframe 高亮功能
+ *
+ * 使用方法：
+ * 1. 将此脚本添加到目标网站的 HTML 中
+ * 2. 或通过浏览器扩展、用户脚本等方式注入
+ */
+
+(function () {
+  "use strict";
+
+  // 检查是否在 iframe 中
+  if (window.self === window.top) {
+    return; // 不在 iframe 中，不执行
+  }
+
+  // 检查是否已经初始化过
+  if (window.__iframeHighlightInitialized) {
+    return;
+  }
+  window.__iframeHighlightInitialized = true;
+  console.log("Iframe 高亮脚本已加载");
+
+  // 创建高亮覆盖层
+  var overlay = document.createElement("div");
+  overlay.id = "iframe-highlight-overlay";
+  overlay.style.cssText = "\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100vw;\n    height: 100vh;\n    pointer-events: none;\n    z-index: 999999;\n    overflow: hidden;\n  ";
+
+  // 创建悬停高亮框（虚线边框）
+  var highlightBox = document.createElement("div");
+  highlightBox.id = "iframe-highlight-box";
+  highlightBox.style.cssText = "\n    position: absolute;\n    border: 2px dashed #007AFF;\n    background: rgba(0, 122, 255, 0.08);\n    pointer-events: none;\n    display: none;\n    transition: all 0.1s ease;\n    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.8);\n    border-radius: 2px;\n  ";
+
+  // 创建选中节点的常驻高亮框（实线边框）
+  var selectedBox = document.createElement("div");
+  selectedBox.id = "iframe-selected-box";
+  selectedBox.style.cssText = "\n    position: absolute;\n    border: 2px solid #007AFF;\n    pointer-events: none;\n    display: none;\n    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.9), 0 0 8px rgba(255, 107, 53, 0.4);\n    border-radius: 2px;\n    z-index: 1000000;\n  ";
+
+  // 创建悬停标签显示
+  var tagLabel = document.createElement("div");
+  tagLabel.id = "iframe-tag-label";
+  tagLabel.style.cssText = "\n    position: absolute;\n    background: #007AFF;\n    color: white;\n    padding: 2px 6px;\n    font-size: 11px;\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n    border-radius: 2px;\n    pointer-events: none;\n    display: none;\n    white-space: nowrap;\n    z-index: 1000001;\n    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);\n    font-weight: 500;\n  ";
+
+  // 创建选中节点标签
+  var selectedLabel = document.createElement("div");
+  selectedLabel.id = "iframe-selected-label";
+  selectedLabel.style.cssText = "\n    position: absolute;\n    background: #007AFF;\n    color: white;\n    padding: 3px 8px;\n    font-size: 11px;\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n    border-radius: 3px;\n    pointer-events: none;\n    display: none;\n    white-space: nowrap;\n    z-index: 1000002;\n    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);\n    font-weight: 600;\n  ";
+  overlay.appendChild(highlightBox);
+  overlay.appendChild(selectedBox);
+  overlay.appendChild(tagLabel);
+  overlay.appendChild(selectedLabel);
+  document.body.appendChild(overlay);
+
+  // 存储当前选中的元素
+  var selectedElement = null;
+  var highlightEnabled = false;
+
+  // 更新选中元素的高亮显示
+  function updateSelectedHighlight(element) {
+    console.log("updateSelectedHighlight called with:", element);
+    if (!element) {
+      selectedBox.style.display = "none";
+      selectedLabel.style.display = "none";
+      selectedElement = null;
+      console.log("Cleared selected highlight");
+      return;
+    }
+    selectedElement = element;
+    var rect = element.getBoundingClientRect();
+    console.log("Selected element rect:", rect);
+
+    // 更新选中高亮框位置
+    selectedBox.style.display = "block";
+    selectedBox.style.left = "".concat(rect.left - 2, "px");
+    selectedBox.style.top = "".concat(rect.top - 2, "px");
+    selectedBox.style.width = "".concat(rect.width + 4, "px");
+    selectedBox.style.height = "".concat(rect.height + 4, "px");
+
+    // 更新选中标签位置和内容
+    selectedLabel.style.display = "block";
+    selectedLabel.textContent = "\u2713 <".concat(element.tagName.toLowerCase(), ">");
+
+    // 计算标签位置，确保不超出视窗
+    var labelTop = rect.top - 28;
+    var labelLeft = rect.left;
+
+    // 如果标签会超出顶部，显示在元素下方
+    if (labelTop < 5) {
+      labelTop = rect.bottom + 5;
+    }
+
+    // 如果标签会超出右侧，向左调整
+    var labelWidth = selectedLabel.offsetWidth || 100; // 预估宽度
+    if (labelLeft + labelWidth > window.innerWidth - 10) {
+      labelLeft = window.innerWidth - labelWidth - 10;
+    }
+    selectedLabel.style.left = "".concat(Math.max(5, labelLeft), "px");
+    selectedLabel.style.top = "".concat(labelTop, "px");
+    console.log("Selected highlight positioned at:", {
+      left: selectedBox.style.left,
+      top: selectedBox.style.top,
+      width: selectedBox.style.width,
+      height: selectedBox.style.height
+    });
+  }
+  function getElementSelector(element) {
+    if (!(element instanceof Element)) throw new Error('Argument must be a DOM element');
+    var segments = [];
+    var current = element;
+    while (current !== document.documentElement) {
+      var selector = '';
+      // 优先检查唯一ID
+      if (current.id && document.querySelectorAll("#".concat(current.id)).length === 1) {
+        segments.unshift("#".concat(current.id));
+        break; // ID唯一，无需继续向上
+      }
+
+      // 生成类名选择器（取第一个有效类名）
+      var classes = Array.from(current.classList).filter(function (c) {
+        return !c.startsWith('js-');
+      });
+      var className = classes.length > 0 ? ".".concat(classes[0]) : '';
+
+      // 生成位置索引（nth-child）
+      var tag = current.tagName.toLowerCase();
+      if (!className) {
+        var siblings = Array.from(current.parentNode.children);
+        var index = siblings.findIndex(function (el) {
+          return el === current;
+        }) + 1;
+        selector = "".concat(tag, ":nth-child(").concat(index, ")");
+      } else {
+        selector = className;
+      }
+      segments.unshift(selector);
+      current = current.parentElement;
+    }
+
+    // 处理根元素
+    if (current === document.documentElement) {
+      segments.unshift('html');
+    }
+    return segments.join(' > ');
+  }
+
+  // 获取元素文本内容
+  function getElementText(element) {
+    var _element$textContent;
+    if (element.tagName === "INPUT") {
+      return element.value || element.placeholder || "";
+    }
+    if (element.tagName === "TEXTAREA") {
+      return element.value || element.placeholder || "";
+    }
+    var text = ((_element$textContent = element.textContent) === null || _element$textContent === void 0 ? void 0 : _element$textContent.trim()) || "";
+    return text.length > 50 ? text.substring(0, 50) + "..." : text;
+  }
+
+  // 获取元素属性信息
+  function getElementAttributes(element) {
+    var attrs = {};
+    for (var i = 0; i < element.attributes.length; i++) {
+      var attr = element.attributes[i];
+      attrs[attr.name] = attr.value;
+    }
+    return attrs;
+  }
+
+  // 鼠标悬停事件处理
+  function handleMouseOver(e) {
+    if (!highlightEnabled) return;
+    var target = e.target;
+    if (!target || target === overlay || target === highlightBox || target === tagLabel || target === selectedBox || target === selectedLabel) {
+      return;
+    }
+
+    // 避免高亮 html 和 body 元素
+    if (target === document.documentElement || target === document.body) {
+      return;
+    }
+
+    // 如果是已选中的元素，不显示悬停高亮
+    if (target === selectedElement) {
+      highlightBox.style.display = "none";
+      tagLabel.style.display = "none";
+      return;
+    }
+    var rect = target.getBoundingClientRect();
+    var selector = getElementSelector(target);
+    var text = getElementText(target);
+    var attributes = getElementAttributes(target);
+
+    // 更新悬停高亮框位置
+    highlightBox.style.display = "block";
+    highlightBox.style.left = "".concat(rect.left - 2, "px");
+    highlightBox.style.top = "".concat(rect.top - 2, "px");
+    highlightBox.style.width = "".concat(rect.width + 4, "px");
+    highlightBox.style.height = "".concat(rect.height + 4, "px");
+
+    // 更新标签位置和内容
+    tagLabel.style.display = "block";
+    tagLabel.textContent = "<".concat(target.tagName.toLowerCase(), ">");
+
+    // 计算标签位置，确保不超出视窗
+    var labelTop = rect.top - 22;
+    var labelLeft = rect.left;
+
+    // 如果标签会超出顶部，显示在元素下方
+    if (labelTop < 0) {
+      labelTop = rect.bottom + 5;
+    }
+
+    // 如果标签会超出右侧，向左调整
+    if (labelLeft + tagLabel.offsetWidth > window.innerWidth) {
+      labelLeft = window.innerWidth - tagLabel.offsetWidth - 5;
+    }
+    tagLabel.style.left = "".concat(Math.max(0, labelLeft), "px");
+    tagLabel.style.top = "".concat(labelTop, "px");
+
+    // 发送消息到父窗口
+    var elementInfo = {
+      tagName: target.tagName.toLowerCase(),
+      rect: {
+        left: rect.left,
+        top: rect.top,
+        right: rect.right,
+        bottom: rect.bottom,
+        width: rect.width,
+        height: rect.height,
+        x: rect.x,
+        y: rect.y
+      },
+      selector: selector,
+      text: text,
+      attributes: attributes,
+      url: window.location.href,
+      path: window.location.pathname,
+      timestamp: Date.now()
+    };
+    try {
+      window.parent.postMessage({
+        type: "iframe-element-hover",
+        data: elementInfo,
+        source: "iframe-highlight-injector"
+      }, "*");
+    } catch (error) {
+      console.warn("无法发送消息到父窗口:", error);
+    }
+  }
+
+  // 鼠标离开事件处理
+  function handleMouseOut(e) {
+    if (!highlightEnabled) return;
+    var relatedTarget = e.relatedTarget;
+
+    // 如果鼠标移动到高亮相关元素上，不隐藏高亮
+    if (relatedTarget && (relatedTarget === highlightBox || relatedTarget === tagLabel || relatedTarget === overlay || relatedTarget === selectedBox || relatedTarget === selectedLabel)) {
+      return;
+    }
+    highlightBox.style.display = "none";
+    tagLabel.style.display = "none";
+    try {
+      window.parent.postMessage({
+        type: "iframe-element-hover",
+        data: null,
+        source: "iframe-highlight-injector"
+      }, "*");
+    } catch (error) {
+      console.warn("无法发送消息到父窗口:", error);
+    }
+  }
+
+  // 点击事件处理
+  function handleClick(e) {
+    var target = e.target;
+    if (!target || target === overlay || target === highlightBox || target === tagLabel || target === selectedBox || target === selectedLabel) {
+      return;
+    }
+
+    // 避免处理 html 和 body 元素
+    if (target === document.documentElement || target === document.body) {
+      return;
+    }
+
+    // 检查是否是交互元素，这些元素需要保留默认行为
+    var isInteractiveElement = ['input', 'textarea', 'select', 'button', 'a'].includes(target.tagName.toLowerCase());
+
+    // 如果高亮功能启用，对于非交互元素阻止默认行为和事件传播
+    if (highlightEnabled) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    var rect = target.getBoundingClientRect();
+    var selector = getElementSelector(target);
+    var text = getElementText(target);
+    var attributes = getElementAttributes(target);
+    console.log("Element clicked:", {
+      tagName: target.tagName,
+      selector: selector,
+      rect: rect
+    });
+
+    // 立即更新选中高亮
+    updateSelectedHighlight(target);
+
+    // 隐藏悬停高亮，因为现在是选中状态
+    highlightBox.style.display = "none";
+    tagLabel.style.display = "none";
+    var elementInfo = {
+      tagName: target.tagName.toLowerCase(),
+      rect: {
+        left: rect.left,
+        top: rect.top,
+        right: rect.right,
+        bottom: rect.bottom,
+        width: rect.width,
+        height: rect.height,
+        x: rect.x,
+        y: rect.y
+      },
+      selector: selector,
+      text: text,
+      attributes: attributes,
+      url: window.location.href,
+      path: window.location.pathname,
+      timestamp: Date.now()
+    };
+    try {
+      window.parent.postMessage({
+        type: "iframe-element-click",
+        data: elementInfo,
+        source: "iframe-highlight-injector"
+      }, "*");
+    } catch (error) {
+      console.warn("无法发送消息到父窗口:", error);
+    }
+  }
+
+  // 监听来自父窗口的消息
+  function handleParentMessage(event) {
+    console.log("Received message from parent:", event.data);
+    if (event.data.type === "iframe-highlight-toggle") {
+      var enabled = event.data.enabled;
+      console.log("Highlight toggle:", enabled);
+      if (enabled) {
+        enableHighlight();
+      } else {
+        disableHighlight();
+      }
+    } else if (event.data.type === "enable-iframe-highlight") {
+      console.log("Enable iframe highlight");
+      enableHighlight();
+    } else if (event.data.type === "disable-iframe-highlight") {
+      console.log("Disable iframe highlight");
+      disableHighlight();
+    } else if (event.data.type === "toggle-iframe-highlight") {
+      var _enabled = event.data.enabled !== undefined ? event.data.enabled : !highlightEnabled;
+      console.log("Toggle iframe highlight to:", _enabled);
+      if (_enabled) {
+        enableHighlight();
+      } else {
+        disableHighlight();
+      }
+    } else if (event.data.type === "update-selected-element") {
+      var selector = event.data.selector;
+      console.log("Update selected element with selector:", selector);
+      if (selector) {
+        try {
+          var element = document.querySelector(selector);
+          console.log("Found element by selector:", element);
+          updateSelectedHighlight(element);
+        } catch (error) {
+          console.warn("Failed to select element:", error);
+          updateSelectedHighlight(null);
+        }
+      } else {
+        updateSelectedHighlight(null);
+      }
+    } else if (event.data.type === "clear-selected-element") {
+      console.log("Clear selected element");
+      updateSelectedHighlight(null);
+    }
+  }
+
+  // 启用高亮功能
+  function enableHighlight() {
+    console.log("Enabling highlight");
+    document.addEventListener("mouseover", handleMouseOver, true);
+    document.addEventListener("mouseout", handleMouseOut, true);
+    document.addEventListener("click", handleClick, true);
+    highlightEnabled = true;
+    overlay.style.display = "block";
+  }
+
+  // 禁用高亮功能
+  function disableHighlight() {
+    console.log("Disabling highlight");
+    highlightEnabled = false;
+    // 保持事件监听器，但通过 highlightEnabled 变量控制行为
+    // 这样可以保留选中状态的显示
+    highlightBox.style.display = "none";
+    tagLabel.style.display = "none";
+    // 不隐藏 selectedBox 和 selectedLabel，保留选中状态
+  }
+
+  // 完全禁用高亮功能（移除所有监听器）
+  function fullyDisableHighlight() {
+    console.log("Fully disabling highlight");
+    highlightEnabled = false;
+    document.removeEventListener("mouseover", handleMouseOver, true);
+    document.removeEventListener("mouseout", handleMouseOut, true);
+    document.removeEventListener("click", handleClick, true);
+    overlay.style.display = "none";
+    highlightBox.style.display = "none";
+    tagLabel.style.display = "none";
+    selectedBox.style.display = "none";
+    selectedLabel.style.display = "none";
+  }
+
+  // 添加事件监听
+  enableHighlight();
+  window.addEventListener("message", handleParentMessage);
+
+  // 暴露全局函数供外部调用
+  window.__iframeHighlightControl = {
+    enable: enableHighlight,
+    disable: disableHighlight,
+    fullyDisable: fullyDisableHighlight,
+    isEnabled: function isEnabled() {
+      return highlightEnabled;
+    },
+    getSelectedElement: function getSelectedElement() {
+      return selectedElement;
+    },
+    updateSelected: updateSelectedHighlight,
+    // 通过消息发送开关控制
+    sendToggleMessage: function sendToggleMessage(enabled) {
+      window.parent.postMessage({
+        type: 'iframe-highlight-status',
+        enabled: enabled || highlightEnabled,
+        source: 'iframe-highlight-injector'
+      }, '*');
+    }
+  };
+
+  // 通知父窗口脚本已加载
+  try {
+    window.parent.postMessage({
+      type: "iframe-highlight-ready",
+      data: {
+        url: window.location.href,
+        userAgent: navigator.userAgent,
+        timestamp: Date.now()
+      },
+      source: "iframe-highlight-injector"
+    }, "*");
+  } catch (error) {
+    console.warn("无法发送就绪消息到父窗口:", error);
+  }
+
+  // 清理函数
+  window.__iframeHighlightCleanup = function () {
+    fullyDisableHighlight();
+    window.removeEventListener("message", handleParentMessage);
+    if (overlay.parentElement) {
+      overlay.parentElement.removeChild(overlay);
+    }
+    delete window.__iframeHighlightInitialized;
+    delete window.__iframeHighlightCleanup;
+  };
+})();
+
+</script>
+</body>
+</html>
